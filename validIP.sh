@@ -12,7 +12,14 @@ function verify-IP() {
   return 0
 }
 
-grep -e '^[0-9]' ~/etc/hosts | grep -v "::" | while read -r word1 word2; do
+filename=$1
+
+if [[ ! -f "$filename" ]]; then
+  echo "$filename does not exist"
+  exit 1
+fi
+
+grep -e '^[0-9]' $filename | grep -v "::" | while read -r word1 word2; do
   verify-IP $word1 $word2 
 done
 
